@@ -1,38 +1,60 @@
+"use strict";
+
 let processComputeButton = () => {
+    $("#loading").append(
 
-    $.get("/getData", data => {}).done(function(data) {
+        "<div class=\"mdl-cell mdl-cell--10-col\">" +
+        "<center>" +
+        "</div>" +
+        "<section class=\"mdl-layout__tab-panel is-active\" id=\"scroll-tab-1\">" +
+        "<div class=\"cs-loader\">" +
+        " <div class=\"cs-loader-inner\">" +
+        "<label>	●</label>" +
+        "<label>	●</label>" +
+        "<label>	●</label>" +
+        "<label>	●</label>" +
+        "<label>	●</label>" +
+        "<label>	●</label>" +
+        "</div>" +
+        "</div>" +
+        "</section>" +
+        " </div>" +
+        "<center>" +
+        " </div>"
+
+    );
+
+    $("#result").empty();
+    $.get("/getData", data => {}).then((data) => {
         console.log(eval(data));
-
+        $("#loading").empty();
+        let html =
+            "<table class=\"mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp\">" +
+            "<thead>" +
+            "<tr>" +
+            "<th>Title</th>" +
+            "<th>Seeders</th>" +
+            "<th>Leechers</th>" +
+            "<th>Size</th>" +
+            "</tr>" +
+            "</thead>" +
+            "<tbody>";
         for (let o of data) {
             if (o.url != "") {
-
-
-                $("#result").append(
-                    "<div class=\"mdl-cell mdl-cell--10-col\">" +
-                    "<center>" +
-                    "<div class=\" mdl-card mdl-shadow--2dp\" style=\"width:900px;\">" +
-                    "<div class=\"mdl-card__title mdl-color--grey mdl-color-text--white\">" +
-                    "<h2 class=\"mdl-card__title-text\"> <a href='" + o.url + "'>" + o.title + "</a></h2>" +
-                    "</div>" +
-                    "<section class=\"mdl-layout__tab-panel is-active\" id=\"scroll-tab-1\">" +
-                    "<div class=\"page-content\">" +
-                    "<div class=\"mdl-cell mdl-cell--12-col\">" +
-                    "<div class=\"mdl-textfield mdl-js-textfield mdl-textfield--floating-label\">" +
-                    "<p> Leechers: " + o.leechers + "<p>" +
-                    "<p> Seeders: " + o.seeds + "<p>" +
-                    "<p> Size: " + o.size + "</p>" +
-                    "</div>" +
-                    "</div>" +
-                    "</div>" +
-                    "</section>" +
-                    " </div>" +
-                    "<center>" +
-                    " </div>"
-                );
+                html += 
+                    "<tr>" +
+                    "<td class=\"mdl-data-table__cell--non-numeric\">" + "<a href='" + o.url + "'>" + o.title + "</a>" + "</td>" +
+                    "<td>" + o.seeds + "</td>" +
+                    "<td>" + o.leechers + "</td>" +
+                    "<td>" + o.size + "</td>" +
+                    "</tr>" 
+                    ;
             }
         }
+        $("#result").append(html + "</tbody>" + "</table>");
+
     });
-};
+}
 $("#searchForm").submit(event => {
     event.preventDefault();
     let searchKeywords = $("#searchForm").find('input[name="search_keywords"]').val();

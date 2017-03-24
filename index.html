@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <title>Fat & Furious</title>
     <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/The_Pirate_Bay_logo_bw.svg/2000px-The_Pirate_Bay_logo_bw.svg.png" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
@@ -11,7 +12,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
     <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.1/material.teal-red.min.css">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.grey-orange.min.css" />
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.grey-light_blue.min.css" />
+    <link rel="stylesheet" href="style_css" />
 </head>
 
 <body>
@@ -19,7 +21,7 @@
         <header class="mdl-layout__header">
             <div class="mdl-layout__header-row">
                 <!-- Title -->
-                <span class="mdl-layout-title mdl-center">
+                <span class="mdl-layout-title mdl-center mdl-color-text--white">
                     <h3>Fat & Furious Torrent Search</h3>
                 </span>
                 <!-- Add spacer, to align navigation to the right -->
@@ -29,7 +31,7 @@
 
                 <!-- Navigation. We hide it in small screens. -->
                 <nav class="mdl-navigation mdl-layout--large-screen-only">
-                    <a class="mdl-navigation__link" href="/index">
+                    <a class="mdl-navigation__link mdl-color-text--white" href="/index">
                         <b>Home</b>
                     </a>
                 </nav>
@@ -44,44 +46,37 @@
         </div>
         <main class="mdl-layout__content">
             <center>
-                <div class="mdl-cell mdl-cell--10-col">
-                    <div class="page-content">
-                        <div class="demo-card-square mdl-card mdl-shadow--2dp">
-                            <div class="mdl-card__title mdl-color--blue mdl-color-text--white">
-                                <h2 class="mdl-card__title-text">Search illegal stuff</h2>
-                            </div>
 
-                            <div class="mdl-card__supporting-text">
-                                yeeeee boiiiiiiii type yo shit here </div>
-                            <form action="/" id="searchForm">
-                                <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
-                                    <div class="page-content">
-                                        <div class="mdl-cell mdl-cell--12-col">
-                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                <input class="model mdl-textfield__input" type="text" name="search_keywords" />
-                                                <label class="mdl-textfield__label" for="search_keywords">Type here</label>
-                                            </div>
-                                        </div>
-                                        <div class="mdl-card__actions mdl-card--border">
-                                            <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="Search" />
-                                        </div>
-                                    </div>
-                                </section>
-                            </form>
+
+                <h2 class="mdl-title-text mdl-color-text--grey-700">Search illegal stuff</h2>
+
+                <form action="/" id="searchForm">
+                    <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
+                        <div class="page-content">
+                            <div class="mdl-cell mdl-cell--12-col">
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="model mdl-textfield__input" type="text" name="search_keywords" />
+                                </div>
+                            </div>
+                                <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button" value="Search" />
                         </div>
-                    </div>
-                </div>
+                    </section>
+                </form>
+                
+                <br/>
+
+                <div id="loading"></div>
                 <div id="result"></div>
             </center>
         </main>
         <footer class="mdl-mini-footer">
             <div class="mdl-mini-footer__left-section">
-                <div class="mdl-logo">Fat & Furious Torrent Search</div>
+                <div class="mdl-logo mdl-color-text--white">Fat & Furious Torrent Search</div>
                 <ul class="mdl-mini-footer__link-list">
                     <li><a href="#">Help</a></li>
                     <li><a href="https://opensource.org/licenses/MIT">Privacy & Terms</a></li>
                 </ul>
-                <span><b>Disclaimer</b>: peer to peer might be illegal in some countries make sure to check your legislation
+                <span class="mdl-color-text--red"><b>Disclaimer</b>: peer to peer might be illegal in some countries make sure to check your legislation
             Also some links here may display illegal content, be responsible and use a V.P.N.</span>
             </div>
         </footer>
