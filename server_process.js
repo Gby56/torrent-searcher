@@ -24,7 +24,7 @@ let Promise = require('promise');
  * Default port used by application.
  */
 const g_serverVariables = {
-    "port": 2000,
+    "port": process.env.PORT,
     "ip": process.env.IP,
     "search_keywords": "tokyo"
 };
