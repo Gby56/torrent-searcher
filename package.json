@@ -4,6 +4,7 @@
   "description": "",
   "main": "server_process.js",
   "dependencies": {
+    "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "extratorrent-api": "^1.1.2",
     "promise": "^7.1.1",
