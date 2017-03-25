@@ -10,7 +10,7 @@
 - [Usage](#usage)
 - [Dependencies](#dependencies)
 - [Disclaimer](#disclaimer)
-- [Team] (#team)
+- [Team](#team)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
