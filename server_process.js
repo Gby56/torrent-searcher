@@ -26,7 +26,7 @@ let Promise = require('promise');
 const g_serverVariables = {
     "port": process.env.PORT,
     "ip": process.env.IP,
-    "search_keywords": "tokyo"
+    "search_keywords": ""
 };
 
 
@@ -54,32 +54,36 @@ app.get('/index', (request, response) => {
 app.get('/form_action', (request, response) => {
     response.sendFile(__dirname + '/form_action.js')
 });
+app.get('/style_css', (request, response) => {
+    response.sendFile(__dirname + '/style.css')
+});
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-// ----------------------- EXTRATORRENTS -----------------------
-/*  console.log("Starting query for: " + search_keywords)
-let ExtraTorrentPromise = Promise.resolve(extraTorrentAPI.search({
-        "with_words": search_keywords
-    }).then(result => {
-        let clean = [];
-        for (let r of result.results) {
-            clean.push({
-                "title": r.title,
-                "url": r.url,
-                "size": r.size,
-                "seeds": r.seeds,
-                "leechers": r.leechers
-            });
-        }
-        return clean;
-    })
-    .catch(err => console.log(err))
-);
-*/
+
 
 let performQuery = function(search_keywords) {
+
+    // ----------------------- EXTRATORRENTS -----------------------
+    //let ExtraTorrentPromise = Promise.resolve({});
+    /*extraTorrentAPI.search({
+            "with_words": search_keywords
+        }).then(result => {
+            let clean = [];
+            for (let r of result.results) {
+                clean.push({
+                    "title": r.title,
+                    "url": r.url,
+                    "size": r.size,
+                    "seeds": r.seeds,
+                    "leechers": r.leechers
+                });
+            }
+            return clean;
+        })
+        .catch(err => console.log(err))
+    );*/
     // ----------------------- THEPIRATEBAY -----------------------
     let PirateBayPromise = Promise.resolve(PirateBay.search(search_keywords, {
             category: 'all', // default - 'all' | 'all', 'audio', 'video', 'xxx',
@@ -144,7 +148,6 @@ let performQuery = function(search_keywords) {
     Promise.all([torrentSearchPromise, PirateBayPromise /*, ExtraTorrentPromise*/ ]).then(values => {
         let resultArray = [];
         let torrentTitleList = [];
-        console.log("size:" + values.length);
         for (let i = 0; i < values.length; ++i) {
             if (values[i] !== [] && values[i] !== undefined) {
                 for (let torrent of values[i]) {
@@ -153,11 +156,12 @@ let performQuery = function(search_keywords) {
                         resultArray.push(torrent);
                     }
                 }
-            } else {
+            }
+            else {
                 console.log("error in value " + i);
             }
         }
-        console.log(resultArray);
+        //console.log(resultArray);
         console.log(resultArray.length + " result(s) found.");
     }).catch(err => console.log(err));
 }
@@ -216,10 +220,8 @@ app.get('/getData', (req, res) => {
                     "title": r.title,
                     "url": r.desc,
                     "size": r.size,
-                    "seeds": r.seeds,
-                    "leechers": (!(isNaN(r.peers - r.seed)) &&
-                            (r.peers - r.seed > 0)) ?
-                        r.peers - r.seed : 0
+                    "seeds": r.seeds || 0,
+                    "leechers": r.peers || 0
                 });
             }
             return clean;
@@ -229,10 +231,10 @@ app.get('/getData', (req, res) => {
         })
     );
 
-    Promise.all([torrentSearchPromise, PirateBayPromise /*, ExtraTorrentPromise*/ ]).then(values => {
+    Promise.all([torrentSearchPromise, PirateBayPromise, /* ExtraTorrentPromise*/]).then(values => {
         let resultArray = [];
         let torrentTitleList = [];
-        for (let i = 0; i < values.length -1; ++i) {
+        for (let i = 0; i < values.length - 1; ++i) {
             for (let torrent in values[i]) {
                 if (!torrentTitleList.some(title => title === values[i][torrent].title)) {
                     torrentTitleList.push(values[i][torrent].title);
@@ -241,7 +243,14 @@ app.get('/getData', (req, res) => {
             }
         }
         console.log(resultArray);
+        
         console.log(resultArray.length + " result(s) found.");
         return resultArray;
-    }).then((value) => {res.json(value);}).catch(err => console.log(err));
+    }).then((value) => {
+        value.sort(function(a, b){return b.seeds -a.seeds});
+        return value;
+       
+    }).then((value) => {
+         res.json(value);
+    }).catch(err => console.log(err));
 });
