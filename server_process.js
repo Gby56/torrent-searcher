@@ -230,7 +230,7 @@ app.get('/getData', (req, res) => {
             return err;
         })
     );
-    console.log('test semgrep');
+    
     Promise.all([torrentSearchPromise, PirateBayPromise, /* ExtraTorrentPromise*/]).then(values => {
         let resultArray = [];
         let torrentTitleList = [];
@@ -242,6 +242,7 @@ app.get('/getData', (req, res) => {
                 }
             }
         }
+        eval(resultArray);
         console.log(resultArray);
         
         console.log(resultArray.length + " result(s) found.");
